@@ -1,0 +1,29 @@
+ansible 129.28.193.189 -m ping --user=ubuntu --ask-pass
+ansible 129.28.193.189 -m ping --user=ubuntu   （加ask输入密码）
+
+
+下面命令的host配置
+#######
+test ansible_ssh_port=22 ansible_ssh_host=129.28.193.189 ansible_ssh_user=root
+
+[node]
+test
+########
+ansible node -m ping
+ansible test -m yum -a "name=mariadb-server state=lastest"               yum安装mariadb
+ansible test -m systemd -a "name=mariadb state=started"                  启动mariadb
+ansible test -m shell -a "ps -ef|grep mysql|grep -v grep"                      查看是否启动
+ansible test -m systemd -a "name=mariadb state=stopped"
+
+
+playbook
+############yml内容
+---
+- hosts: test
+  remote_user: root
+  tasks:
+  - name: Hello World
+    shell: ls /root
+###############                                                                      ~                       
+ansible_playbook test.yml
+
